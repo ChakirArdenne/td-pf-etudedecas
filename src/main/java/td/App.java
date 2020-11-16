@@ -38,6 +38,7 @@ public class App {
         });
     }
 
+    //Question 2
     private static final Set<Matiere> getAllMatiereFromYear(Annee annee) {
         Set<Matiere> rtr = new HashSet<>();
         for (UE ue : annee.ues()) {
@@ -45,9 +46,7 @@ public class App {
         }
         return rtr;
     }
-
-
-    //Question 2
+    
     static final Predicate<Etudiant> aDef = etudiant -> {
         Set<Matiere> matiere = getAllMatiereFromYear(etudiant.annee());
         for (Matiere mat :matiere) {
