@@ -3,13 +3,12 @@
  */
 package td;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.lang.model.element.Element;
-
 import com.google.common.base.Predicate;
-
 import td.universite.Annee;
 import td.universite.Etudiant;
 import td.universite.Matiere;
@@ -36,7 +35,41 @@ public class App {
         });
     }
 
+    private final static Set<Matiere> getAllMatiereFromYear(Annee annee) {
+        Set<Matiere> rtr = new HashSet<>();
+        for (UE ue : annee.ues()) {
+            rtr.addAll(ue.ects().keySet());
+        }
+        return rtr;
+    }
+
+
     //Question 2
+    final static Predicate<Etudiant> aDef = etudiant -> {
+        Set<Matiere> matiere = getAllMatiereFromYear(etudiant.annee());
+        for (Matiere mat :matiere) {
+            if(!etudiant.notes().containsKey(mat))
+                return true;
+        }
+        return false;
+    };
+
+    //Question 3
+    final static Predicate<Etudiant> aNoteEliminatoire = etudiant -> {
+        for (Double note : etudiant.notes().values()) {
+            if(note < 6)
+                return true;
+        }
+        return false;
+    };
+
+    //Question 4
+    public static void moyenne(Etudiant etudiant) {
+        for (UE ue : etudiant.annee().ues()) {
+            Set<Matiere> matiere = ue.ects().keySet();
+
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -59,6 +92,16 @@ public class App {
         e3.noter(m2, 5.0);
         e3.noter(m3, 14.0);
 
+        //Question 1
         afficheSi("** Tous les etudiants **", listeEtudiants, a1);
+
+        //Question 2
+        afficheSi("** Défaillant **", aDef, a1);
+
+        //Question 3
+        afficheSi("** ETUDIANTS AVEC NOTE ELIMINATOIRE **", aNoteEliminatoire, a1);
+
+        //Question 4
+        moyenne();
     }
 }
