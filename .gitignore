@@ -6,8 +6,7 @@ build
 
 
 #VSCODE
-bin/
-build/
+bin
 .classpath
 .settings
 .project
